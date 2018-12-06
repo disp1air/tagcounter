@@ -13,4 +13,6 @@ def read_data_from_file(filename):
         data = pickle.load(k)
     return data
 
-
+def write_data_to_file(filename, data):
+    with open(filename, 'wb') as d:
+        pickle.dump(str(data), d)
