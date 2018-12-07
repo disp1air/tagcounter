@@ -6,6 +6,7 @@ from pick import write_data_to_file
 from const import filename_for_logging, tag_info_filename
 from data import work_with_db
 from gui import gui
+from gui2 import gui2
 
 def main(web_page_address):
     logging.basicConfig(filename=filename_for_logging, level=logging.INFO, format="%(asctime)s %(message)s")
@@ -30,7 +31,8 @@ def main(web_page_address):
 if __name__ == '__main__':
     try:
         if len(sys.argv) == 1:
-            gui()
+            # gui()
+            gui2()
         elif len(sys.argv) == 2:
             print('Enter command and webpage address, please')
         else:

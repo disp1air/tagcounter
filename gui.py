@@ -1,6 +1,7 @@
 from tkinter import *
 import tkinter.ttk as ttk
 from config import *
+from data import read_data_from_db
 
 def gui():
     root = Tk()
@@ -14,8 +15,10 @@ def gui():
     thirdFrame = Frame(root)
     thirdFrame.pack(side=BOTTOM)
 
+    
+    choosen_value = StringVar()
     cb = ttk.Combobox(firstFrame, values=sites_for_combobox, width=20)
-    bc = Button(firstFrame, text=choose_button)
+    bc = Button(firstFrame, text=choose_button, command=read_data_from_db("ya.ru"))
     
     e = Entry(secondFrame, width=30)
     
