@@ -14,31 +14,38 @@ def write_data_to_file(filename, data):
         pickle.dump(str(data), d)
 
 def read_data_from_db(web_page_address):
-    conn = sqlite3.connect(db_name)
-    c = conn.cursor()
-    
-    c.execute("SELECT taginfo FROM tagcounter WHERE site_name=?", (web_page_address,))
-    print(c.fetchone())
+    if web_page_address:
+        conn = sqlite3.connect(db_name)
+        c = conn.cursor()
+        
+        c.execute("SELECT taginfo FROM tagcounter WHERE site_name=?", (web_page_address,))
+        data = c.fetchone()
 
-    conn.commit()
-    conn.close()
+        conn.commit()
+        conn.close()
+        return data[0]
+    else:
+        print("Enter webpage name, please")
 
 def write_data_to_db(web_page_address):
-    tags_dict = tag_counter(web_page_address)
-    write_data_to_file(tag_info_filename, tags_dict)
-    tag_info_str = read_data_from_file(tag_info_filename)    
+    if web_page_address:
+        tags_dict = tag_counter(web_page_address)
+        write_data_to_file(tag_info_filename, tags_dict)
+        tag_info_str = read_data_from_file(tag_info_filename)    
 
-    conn = sqlite3.connect(db_name)
-    c = conn.cursor()
+        conn = sqlite3.connect(db_name)
+        c = conn.cursor()
 
-    url = "https://" + web_page_address
+        url = "https://" + web_page_address
 
-    c.execute("""CREATE TABLE IF NOT EXISTS tagcounter
-        (site_name text, url text, date text, taginfo text)""")
-    c.execute("INSERT INTO tagcounter VALUES (?,?,?,?)",
-        (web_page_address, url, str(datetime.now()), tag_info_str))
+        c.execute("""CREATE TABLE IF NOT EXISTS tagcounter
+            (site_name text, url text, date text, taginfo text)""")
+        c.execute("INSERT INTO tagcounter VALUES (?,?,?,?)",
+            (web_page_address, url, str(datetime.now()), tag_info_str))
 
-    conn.commit()
-    conn.close()
+        conn.commit()
+        conn.close()
 
-    print("Data loaded")
+        print("Data loaded")
+    else:
+        print("Enter webpage name, please")

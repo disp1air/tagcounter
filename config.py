@@ -1,6 +1,6 @@
 choose_button = "Выбрать",
 load_from_db = "Загрузить",
-view_from_db = "Показать из базы"
+view_from_db = "Показать из базы",
 sites_for_combobox = [
     "ya.ru",
     "yandex.ru",
