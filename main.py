@@ -1,5 +1,5 @@
 import sys
-from data import work_with_db
+from read_write import work_with_db
 from gui import gui
     
 if __name__ == '__main__':
