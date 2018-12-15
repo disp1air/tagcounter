@@ -7,7 +7,7 @@ def gui():
     text = ""
     
     root = Tk()
-    root.geometry("300x150")
+    root.geometry("400x300")
     
     firstFrame = Frame(root)
     firstFrame.pack(side=TOP)
@@ -19,22 +19,24 @@ def gui():
     thirdFrame.pack(side=BOTTOM)
 
     def return_data(data):
-      nonlocal text
-      text = read_data_from_db(data)
-      l.config(text=text)
+        nonlocal text
+        text = read_data_from_db(data)
+        if text == None:
+            text = "Enter correct webpage name, please"
+        l.config(text=text)
 
     combobox = ttk.Combobox(firstFrame, values=sites_for_combobox, width=35)
     
     v = StringVar()
     e = Entry(secondFrame, textvariable=v, width=28)
-    v.set("Введите название сайта")
+    v.set(default_entry_message)
 
     bc = Button(secondFrame, text=choose_button, command = lambda: return_data(v.get()))
     
-    load_button = Button(thirdFrame, text=load_from_db, command = lambda: write_data_to_db(combobox.get(), ))
-    view_from_db_button = Button(thirdFrame, text=view_from_db, command = lambda: return_data(combobox.get()))
+    load_button = Button(thirdFrame, text=load_from_db, command = lambda: write_data_to_db(combobox.get() or v.get(), ))
+    view_from_db_button = Button(thirdFrame, text=view_from_db, command = lambda: return_data(combobox.get() or v.get()))
 
-    l = Label(thirdFrame, wraplength=250)
+    l = Label(thirdFrame, wraplength=350)
 
     combobox.grid(row=0)
     

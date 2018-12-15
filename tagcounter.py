@@ -10,11 +10,11 @@ def tag_counter(web_page_address):
     try:
         response = requests.get("https://" + web_page_address)
     except:
-        return print("Wrong webpage address!!!")
-    
+        print("Wrong webpage address!!!")
+
     soup = BeautifulSoup(response.text, "html.parser")
     tags_dict = {}
-
+    
     for tag in soup.findAll():
         if tags_dict.get(tag.name):
             tags_dict[tag.name] += 1
