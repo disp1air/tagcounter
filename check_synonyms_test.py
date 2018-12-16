@@ -16,4 +16,3 @@ class checkSynonymsTestCase(unittest.TestCase):
         self.assertEqual(result, "google")
 
 unittest.main()
-

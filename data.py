@@ -1,7 +1,7 @@
 import pickle
 import sqlite3
 from datetime import datetime
-from tagcounter import tag_counter
+from tagcount import tag_count
 from const import tag_info_filename, db_name
 from config import default_entry_message
 from check_synonyms import check_synonyms
@@ -21,13 +21,11 @@ def read_data_from_db(web_page_address):
             print("Enter correct webpage name, please")
         else:
             web_page_address = check_synonyms(web_page_address)
-            try:
-                conn = sqlite3.connect(db_name)
-                c = conn.cursor()
-            
-                c.execute("SELECT taginfo FROM tagcounter WHERE site_name=?", (web_page_address,))
-            except Exception as error:
-                print("Problem with database: ", error)
+          
+            conn = sqlite3.connect(db_name)
+            c = conn.cursor()
+        
+            c.execute("SELECT taginfo FROM tagcounter WHERE site_name=?", (web_page_address,))
             
             data = c.fetchone()
 
@@ -35,7 +33,8 @@ def read_data_from_db(web_page_address):
             conn.close()
             
             print(data)
-            return data[0]
+            if data:
+                return data[0]
     else:
         print("Enter webpage name, please")
 
@@ -46,7 +45,7 @@ def write_data_to_db(web_page_address):
             print("Enter correct webpage name, please")
         else:
             web_page_address = check_synonyms(web_page_address)
-            tags_dict = tag_counter(web_page_address)
+            tags_dict = tag_count(web_page_address)
             write_data_to_file(tag_info_filename, tags_dict)
             tag_info_str = read_data_from_file(tag_info_filename)    
             

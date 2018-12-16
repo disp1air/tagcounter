@@ -1,6 +1,6 @@
 import unittest
 import responses
-import tagcounter
+import tagcount
 from unittest.mock import MagicMock
 
 class dotdict(dict):
@@ -17,10 +17,10 @@ class TagcounterTestCase(unittest.TestCase):
         test_dict = dotdict({})
         test_dict.name = "div"
 
-        tagcounter.BeautifulSoup = MagicMock()
-        tagcounter.BeautifulSoup().findAll = MagicMock(return_value=[test_dict])
+        tagcount.BeautifulSoup = MagicMock()
+        tagcount.BeautifulSoup().findAll = MagicMock(return_value=[test_dict])
         
-        result = tagcounter.tag_counter("ya.ru")
+        result = tagcount.tag_count("ya.ru")
         self.assertEqual(result, {"div": 1})
         
     @responses.activate
@@ -37,10 +37,10 @@ class TagcounterTestCase(unittest.TestCase):
         test_dict3 = dotdict({})
         test_dict3.name = "div"
 
-        tagcounter.BeautifulSoup = MagicMock()
-        tagcounter.BeautifulSoup().findAll = MagicMock(return_value=[test_dict1, test_dict2, test_dict3])
+        tagcount.BeautifulSoup = MagicMock()
+        tagcount.BeautifulSoup().findAll = MagicMock(return_value=[test_dict1, test_dict2, test_dict3])
         
-        result = tagcounter.tag_counter("ya.ru")
+        result = tagcount.tag_count("ya.ru")
         self.assertEqual(result, {"div": 2, "ul": 1})
         
 unittest.main()
